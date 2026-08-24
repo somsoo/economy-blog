@@ -19,13 +19,19 @@ def generate_post():
     ]
     topic = random.choice(topics)
     
-    prompt = f"""You are a professional financial blogger.
-Write a highly engaging, SEO-optimized blog post in English about: {topic}.
-Include a catchy title, introduction, 3-4 main points with subheadings (##), and a conclusion.
-Make sure the content is formatting in Markdown.
+        prompt = f"""Act as an expert Financial Analyst, SEO Marketer, and Blog Writer for a Finance & Crypto blog.
+    
+Write a highly engaging, long-form, SEO/AEO/GEO-optimized blog post in English about: {topic}.
+
+Requirements:
+- Length: 1200 to 1500 words (Be extremely detailed, provide deep financial analysis, statistics, and actionable advice).
+- Structure: Catchy Title, Engaging Introduction, well-structured headings (H2, H3), Bullet points, Conclusion.
+- SEO/AEO/GEO: Naturally include the keyword in the title, intro, and headings. Optimize for Answer Engine Optimization (AEO) by answering direct questions clearly, and Geo-specific intent if applicable.
+- Tone: You are a real person sharing insights and honest opinions. Conversational, highly engaging, and slightly casual "human" tone. NOT a robotic corporate analyst.
+- Safety: Objective, factual data. No illegal financial advice.
+
 Important: The very first line of your response MUST be the exact title of the post, starting with 'Title: '. Do not use markdown formatting for the title line.
-The rest of the response should be the body of the post.
-"""
+The rest of the response should be the body of the post in standard Markdown format."""
 
     models_to_try = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite']
     response = None
