@@ -68,7 +68,7 @@ Evaluate the draft on three criteria (0-100 score each):
 2. GEO: Clear structured data, bullet points, concise facts.
 3. AEO: Direct answers to the user's implicit question.
 
-If the total score is below 285/300, completely REWRITE the draft to be perfectly optimized. 
+If the total score is below 285/300, logically MODIFY and REFINE the draft to improve the score. Do NOT rewrite from scratch. Enhance the vocabulary, headings, and keyword density while strictly preserving the original length, markdown structure, and any HTML tags. 
 CRITICAL: The very first line of your response MUST still be the exact title of the post, starting with 'Title: '. Do not use markdown formatting for the title line.
 The rest of the response should be the heavily revised and optimized body of the post in standard Markdown format."""
 
