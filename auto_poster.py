@@ -92,7 +92,47 @@ The rest of the response should be the heavily revised and optimized body of the
     else:
         body = text
         
+
+    # Replace [AD_TOP], [AD_MIDDLE], [AD_BOTTOM] or just append if they don't exist
+    ad_top = '''
+<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2228289204702106"
+         data-ad-slot="7975218548"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>'''
+    ad_middle = '''
+<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2228289204702106"
+         data-ad-slot="4854231186"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>'''
+    ad_bottom = '''
+<div class="manual-ad-container" style="margin: 35px 0 10px 0; text-align: center;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2228289204702106"
+         data-ad-slot="2228067849"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>'''
+
+    lines = body.split('\n')
+    if len(lines) > 5:
+        mid_idx = len(lines) // 2
+        body = "\n".join(lines[:mid_idx]) + "\n" + ad_middle + "\n" + "\n".join(lines[mid_idx:])
+        
+    body = ad_top + "\n" + body + "\n" + ad_bottom
     return title, body
+
 
 def save_post(title, body):
     now = datetime.utcnow()
