@@ -27,10 +27,23 @@ Important: The very first line of your response MUST be the exact title of the p
 The rest of the response should be the body of the post.
 """
 
-    response = client.models.generate_content(
-        model='gemini-3.5-flash-lite',
-        contents=prompt
-    )
+    models_to_try = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite']
+    response = None
+    for model_name in models_to_try:
+        try:
+            response = client.models.generate_content(model=model_name, contents=prompt)
+            print(f'Successfully generated content using model: {model_name}')
+            break
+        except Exception as e:
+            if '429' in str(e) or 'quota' in str(e).lower():
+                print(f'Quota exceeded for model {model_name}. Trying next model...')
+                continue
+            else:
+                print(f'Error with {model_name}: {e}')
+                continue
+                
+    if not response:
+        raise Exception('All models failed.')
     
     text = response.text.strip()
     lines = text.split('\n')
