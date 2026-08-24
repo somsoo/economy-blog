@@ -51,7 +51,38 @@ The rest of the response should be the body of the post in standard Markdown for
     if not response:
         raise Exception('All models failed.')
     
+
     text = response.text.strip()
+    
+    # --- 2nd Pass: Review and Revise ---
+    print("Evaluating draft...")
+    eval_prompt = f"""You are a master Editor and SEO/AEO/GEO Specialist.
+Review the following blog post draft:
+
+Draft:
+{text}
+
+Evaluate the draft on three criteria (0-100 score each):
+1. SEO (Search Engine Optimization): Keyword usage, headers, readability.
+2. GEO (Generative Engine Optimization): Clear structured data, bullet points, concise facts for AI to parse.
+3. AEO (Answer Engine Optimization): Direct answers to the user's implicit question.
+
+If the total score is below 285/300, or if it can be significantly improved, completely REWRITE the draft to be perfectly optimized. 
+CRITICAL: The very first line of your response MUST still be the exact title of the post, starting with 'Title: '. Do not use markdown formatting for the title line.
+The rest of the response should be the heavily revised and optimized body of the post in standard Markdown format."""
+
+    revised_response = None
+    for model_name in models_to_try:
+        try:
+            revised_response = client.models.generate_content(model=model_name, contents=eval_prompt)
+            print(f'Successfully revised content using model: {model_name}')
+            break
+        except Exception as e:
+            continue
+            
+    if revised_response and revised_response.text.strip():
+        text = revised_response.text.strip()
+
     lines = text.split('\n')
     title = "Finance Update"
     body = text
