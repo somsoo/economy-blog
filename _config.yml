@@ -1,0 +1,8 @@
+title: Finance & Tech Insights
+description: Crypto, AI, and Stock Market deep dives.
+url: 'https://somsoo.github.io/economy-blog'
+baseurl: ''
+theme: jekyll-theme-minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
