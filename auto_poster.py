@@ -44,26 +44,14 @@ def generate_with_retry(prompt, is_json=False):
 # =================================================================
 # 2. Economy Fetch Logic (DO NOT MODIFY)
 # =================================================================
-def get_trending_keywords():
-    try:
-        url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=US"
-        headers = {"User-Agent": "Mozilla/5.0"}
-        response = requests.get(url, headers=headers, timeout=10)
-        root = ET.fromstring(response.content)
-        keywords = [item.find('title').text for item in root.findall('.//item') if item.find('title') is not None]
-        return ", ".join(keywords[:10])
-    except Exception as e:
-        print(f"Trend Fetch Error: {e}")
-        return "Federal Reserve, AI Stocks, Crypto Regulations, Dividend Yield"
+from keyword_miner import get_golden_keyword_us
 
 def generate_post():
-    trends = get_trending_keywords()
+    golden_keyword = get_golden_keyword_us()
+    print(f"Selected Golden Keyword: {golden_keyword}")
     
     # [Pass 1: 글쓰기 (Write)]
-    draft_prompt = f"""Act as an expert Financial Analyst. Select ONE of the following real-time US trending topics that best fits the finance/crypto niche:
-[Current US Trends]: {trends}
-
-Write a highly engaging, long-form, SEO-optimized blog post in English targeted at the selected keyword.
+    draft_prompt = f"""Act as an expert Financial Analyst. Write a highly engaging, long-form, SEO-optimized blog post in English targeted at the following golden long-tail keyword: "{golden_keyword}".
 - Length: 1500 words (deep financial analysis, statistics).
 - Tone: Objective, factual data.
 """
