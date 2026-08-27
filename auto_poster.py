@@ -113,11 +113,11 @@ The rest should be standard Markdown format.
     # =================================================================
     # [Pass 4: 심플 프롬프트 기반 실사 상징물 이미지 기획]
     image_prompt_gen = f"""
-    Based on the topic "{title}", choose ONE symbolic inanimate object (e.g. golden coin, spray bottle, dog toy) that visually represents the core topic.
+    Based on the topic "{title}", choose a symbolic inanimate object or a natural combination of a few objects (e.g. golden coin and calculator, spray bottle and sponge) that visually represents the core topic.
     Do NOT include humans or complex landscapes. 
     Output JSON only:
     {{
-        "object": "specific object name in English (e.g., golden coin, red rubber dog toy)"
+        "object": "specific object(s) name in English (e.g., golden coin and calculator, red rubber dog toy)"
     }}
     """
     try:
@@ -128,7 +128,7 @@ The rest should be standard Markdown format.
     except Exception as e:
         obj_name = 'simple object'
 
-    final_img_prompt = f'A realistic photograph of a {obj_name} on a clean desk, bright natural lighting, simple and clear'
+    final_img_prompt = f'A realistic photograph of {obj_name} on a clean desk, bright natural lighting, simple and clear'
     encoded_prompt = urllib.parse.quote(final_img_prompt)
 
     os.makedirs('assets/images', exist_ok=True)

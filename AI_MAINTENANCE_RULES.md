@@ -16,6 +16,6 @@ API 비용을 아끼겠다고 글쓰기 단계를 1~2개로 압축하지 마세�
 
 ## 4. 📈 경제 블로그 전용 특수 규칙 (US 타겟 & 덜어냄의 미학 이미지)
 - **US 타겟 영문 작성:** Google US Trends RSS(`geo=US`)를 기반으로 가져오며, 모든 글은 미국 시장을 타겟으로 영문(English)으로 작성되어야 합니다.
-- **이미지 기획 (Over-prompting 금지):** 질감, 3D 렌더링 등의 수식어를 금지하고, 무조건 '상징적인 무생물 1개'를 추출하세요.
+- **이미지 기획 (Over-prompting 금지):** 질감, 3D 렌더링 등의 수식어를 금지하고, 무조건 '상징적인 무생물 사물 또는 자연스러운 조합'을 추출하세요.
 - **심플 프롬프트 고정:** Pollinations URL에 넘기는 프롬프트는 무조건 다음 형식을 고정으로 사용하세요:
-  `A realistic photograph of a {obj_name} on a clean desk, bright natural lighting, simple and clear`
+  `A realistic photograph of {obj_name} on a clean desk, bright natural lighting, simple and clear`
