@@ -219,7 +219,7 @@ The rest should be standard Markdown format.
     return title, final_body
 
 
-def save_post(title, body):
+def save_post(title, body, thumb_rel_path):
     now = datetime.utcnow()
     date_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -231,10 +231,15 @@ def save_post(title, body):
     filepath = os.path.join('_posts', filename)
     os.makedirs('_posts', exist_ok=True)
     
-    frontmatter = f"---\nlayout: post\ntitle: \"{title}\"\ndate: {time_str}\ncategories: [Finance]\n---\n\n{body}\n"
+    frontmatter = f"---\nlayout: post\ntitle: \"{title}\"\ndate: {time_str}\ncategories: [Finance]
+image: /{thumb_rel_path}
+---
+
+{body}
+\"
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(frontmatter)
 
 if __name__ == "__main__":
-    title, body = generate_post()
-    save_post(title, body)
+    title, body, thumb = generate_post()
+    save_post(title, body, thumb)
