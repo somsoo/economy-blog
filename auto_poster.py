@@ -50,25 +50,29 @@ def generate_with_retry(prompt, is_json=False, step_type="write"):
 # 2. Image Generation & Processing
 # =================================================================
 def create_text_thumbnail(text, filename_prefix="thumb"):
-    lines = text.strip().split('\n')
-    lines = [line for line in lines if line.strip()][:2]
+    lines = text.strip().split('
+')
+    lines = [line for line in lines if line.strip()][:3]
     
-    img_width = 800
-    img_height = 800
-    background_color = (92, 70, 182)
+    img_width = 1200
+    img_height = 675
+    background_color = (25, 30, 45)
     text_color = (255, 255, 255)
     
     try:
+        from PIL import Image, ImageDraw, ImageFont
         img = Image.new('RGB', (img_width, img_height), color=background_color)
         draw = ImageDraw.Draw(img)
-        font_path = "/usr/share/fonts/truetype/nanum/NanumSquareB.ttf"
         
+        font_path = "malgun.ttf"
         try:
-            font = ImageFont.truetype(font_path, 60)
+            font = ImageFont.truetype(font_path, 80)
         except:
             font = ImageFont.load_default()
             
-        y_text = img_height // 3
+        draw.rectangle([50, 50, img_width-50, img_height-50], outline=(100, 120, 180), width=3)
+        
+        y_text = (img_height // 2) - (len(lines) * 50)
         for line in lines:
             line = line.strip()
             if not line: continue
@@ -77,14 +81,16 @@ def create_text_thumbnail(text, filename_prefix="thumb"):
                 width = bbox[2] - bbox[0]
                 height = bbox[3] - bbox[1]
             except:
-                width = 400
-                height = 60
-            draw.text(((img_width - width) / 2, y_text), line, font=font, fill=text_color)
-            y_text += height + 30
+                width = len(line) * 20
+                height = 80
             
+            draw.text(((img_width - width) / 2, y_text), line, font=font, fill=text_color)
+            y_text += height + 40
+            
+        import os
         os.makedirs('assets/images', exist_ok=True)
         img_path = f'assets/images/{filename_prefix}.webp'
-        img.save(img_path, 'WEBP', quality=85)
+        img.save(img_path, 'WEBP', quality=90)
         return img_path
     except Exception as e:
         print(f"Thumbnail error: {e}")
@@ -92,6 +98,11 @@ def create_text_thumbnail(text, filename_prefix="thumb"):
 
 def download_vibe_image(vibe_keywords, filename_prefix):
     try:
+        import urllib.parse
+        import requests
+        import io
+        from PIL import Image
+        
         url = f"https://pixabay.com/api/?key=25916942-02c31e217bbcfcf7e089d81d2&q={urllib.parse.quote(vibe_keywords)}&image_type=photo&orientation=horizontal&per_page=3"
         r = requests.get(url, timeout=10)
         data = r.json()
@@ -103,6 +114,7 @@ def download_vibe_image(vibe_keywords, filename_prefix):
         if not img_url:
             return ""
             
+        import os
         os.makedirs('assets/images', exist_ok=True)
         img_r = requests.get(img_url, timeout=10)
         try:
@@ -116,10 +128,8 @@ def download_vibe_image(vibe_keywords, filename_prefix):
             image.save(img_path, 'WEBP', quality=85)
             return img_path
         except:
-            img_path = f'assets/images/{filename_prefix}.jpg'
-            with open(img_path, 'wb') as f:
-                f.write(img_r.content)
-            return img_path
+            print("WebP conversion failed. Skipping image to protect SEO (No raw JPG allowed).")
+            return ""
     except Exception as e:
         print(f"Pixabay failed: {e}")
         return ""
