@@ -3,6 +3,7 @@ layout: post
 title: "Crypto trading으로 수익을 폭발시키는 단 하나의 비밀"
 date: 2026-09-02 13:56:17 +0000
 categories: [Bitcoin investment]
+image: assets/images/thumb_1788357376.webp
 ---
 
 ![Crypto trading]({{ '/' | append: 'assets/images/thumb_1788357376.webp' | relative_url }})
