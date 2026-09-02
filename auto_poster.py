@@ -50,8 +50,7 @@ def generate_with_retry(prompt, is_json=False, step_type="write"):
 # 2. Image Generation & Processing
 # =================================================================
 def create_text_thumbnail(text, filename_prefix="thumb"):
-    lines = text.strip().split('
-')
+    lines = text.strip().split('\n')
     lines = [line for line in lines if line.strip()][:3]
     
     img_width = 1200
@@ -95,7 +94,6 @@ def create_text_thumbnail(text, filename_prefix="thumb"):
     except Exception as e:
         print(f"Thumbnail error: {e}")
         return ""
-
 def download_vibe_image(vibe_keywords, filename_prefix):
     try:
         import urllib.parse
@@ -133,7 +131,6 @@ def download_vibe_image(vibe_keywords, filename_prefix):
     except Exception as e:
         print(f"Pixabay failed: {e}")
         return ""
-
 # =================================================================
 # 3. 6-Step Dynamic Pipeline Core
 # =================================================================
