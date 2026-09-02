@@ -4,10 +4,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.title | escape }} | {{ site.title | escape }}</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
   <style>
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    
     body { font-family: 'Pretendard', sans-serif; }
+    /* 향상된 한글 타이포그래피 (문단 간격 및 줄간격) */
+    .prose p {
+        margin-bottom: 1.75em !important;
+        line-height: 1.8 !important;
+        word-break: keep-all;
+    }
+    .prose h1, .prose h2, .prose h3 {
+        margin-top: 2em !important;
+        margin-bottom: 1em !important;
+        word-break: keep-all;
+    }
+    .prose img { border-radius: 0.75rem; max-height: 500px; width: 100%; object-fit: cover; aspect-ratio: 16/9; margin-top: 2em; margin-bottom: 2em; }
+
     .prose img { border-radius: 0.75rem; max-height: 500px; width: 100%; object-fit: cover; aspect-ratio: 16/9; }
   </style>
 </head>
