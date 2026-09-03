@@ -40,21 +40,21 @@ def generate_post(keyword):
     outline = generate_with_retry(outline_prompt)
 
     # Step 3: Draft
-    draft_prompt = f"Write a 1500-word expert financial blog post on '{keyword}' based on this outline:\\n{outline}\\nRule: Write ENTIRELY in English. Use professional yet accessible tone."
+    draft_prompt = f"Write a 1500-word expert financial blog post on '{keyword}' based on this outline:\n{outline}\nRule: Write ENTIRELY in English. Use professional yet accessible tone."
     draft = generate_with_retry(draft_prompt)
 
     # Step 4: Critique
-    critique_prompt = f"As a Senior SEO Expert, provide 3 brief actionable improvements for this draft to boost Google rankings:\\n{draft}"
+    critique_prompt = f"As a Senior SEO Expert, provide 3 brief actionable improvements for this draft to boost Google rankings:\n{draft}"
     critique = generate_with_retry(critique_prompt)
 
     # Step 5: Rewrite with Multiple Images
-    rewrite_prompt = f"Rewrite the draft into a final 2000-word SEO-optimized post (English Only) using this critique:\\n{critique}\\nDraft:\\n{draft}\\n\\nCRITICAL RULE: Insert the exact text '[VIBE_IMAGE_HERE]' immediately after EVERY H2 heading (##) to allow for image placement.\\nDO NOT use markdown code blocks like `json."
+    rewrite_prompt = f"Rewrite the draft into a final 2000-word SEO-optimized post (English Only) using this critique:\n{critique}\nDraft:\n{draft}\n\nCRITICAL RULE: Insert the exact text '[VIBE_IMAGE_HERE]' immediately after EVERY H2 heading (##) to allow for image placement.\nDO NOT use markdown code blocks like `json."
     final_text = generate_with_retry(rewrite_prompt)
     final_text = re.sub(r'(?i)^(?:#+\s*)?H[23]:\s*', '', final_text, flags=re.MULTILINE)
     final_text = re.sub(r'^---.*?---\s*', '', final_text, flags=re.DOTALL)
 
     # Step 6: Metadata
-    meta_prompt = f"Return a JSON object for this post:\\n{{ 'title': 'Catchy SEO title for {keyword}', 'thumb_hook': '2-line short catchy text for thumbnail\\\\nabout {keyword}', 'vibe_keywords': '1-2 words for pixabay image search (e.g. stock, finance)' }}"
+    meta_prompt = f"Return a JSON object for this post:\n{{ 'title': 'Catchy SEO title for {keyword}', 'thumb_hook': '2-line short catchy text for thumbnail\\\nabout {keyword}', 'vibe_keywords': '1-2 words for pixabay image search (e.g. stock, finance)' }}"
     meta_json_str = generate_with_retry(meta_prompt, is_json=True)
     try:
         meta = json.loads(meta_json_str)
@@ -101,17 +101,17 @@ def generate_post(keyword):
             v_path = download_vibe_image(image_urls[img_idx], f"vibe_{int(time.time())}_{img_idx}")
             img_idx += 1
         if v_path:
-            processed_text += f"\\n<br>\\n![Finance Vibe]({{{{ '/' | append: '{v_path}' | relative_url }}}})\\n<br>\\n"
+            processed_text += f"\n<br>\n![Finance Vibe]({{{{ '/' | append: '{v_path}' | relative_url }}}})\n<br>\n"
         processed_text += part
 
-    ad_middle = '\\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="5979106011" data-ad-format="auto" data-full-width-responsive="true"></ins>\\n<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>\\n</div>\\n'
-    ad_bottom = '\\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="2231432699" data-ad-format="auto" data-full-width-responsive="true"></ins>\\n<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>\\n</div>\\n'
+    ad_middle = '\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="5979106011" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>\n</div>\n'
+    ad_bottom = '\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="2231432699" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>\n</div>\n'
     
     # insert ad middle randomly if possible
-    paragraphs = processed_text.split('\\n\\n')
+    paragraphs = processed_text.split('\n\n')
     if len(paragraphs) > 4:
         paragraphs.insert(len(paragraphs)//2, ad_middle)
-    final_text = '\\n\\n'.join(paragraphs) + ad_bottom
+    final_text = '\n\n'.join(paragraphs) + ad_bottom
 
     return title, final_text, ""
 
@@ -139,7 +139,7 @@ def main():
         
         filename = f'_posts/{date_str}-{safe_title}.md'
         os.makedirs('_posts', exist_ok=True)
-        frontmatter = f"---\\nlayout: post\\ntitle: \\"{title}\\"\\ndate: {date_str}\\n---\\n\\n"
+        frontmatter = f"---\nlayout: post\ntitle: \"{title}\"\ndate: {date_str}\n---\n\n"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(frontmatter + post_content)
         print(f'Successfully generated {filename}')
