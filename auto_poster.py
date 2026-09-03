@@ -30,6 +30,53 @@ def generate_with_retry(prompt, is_json=False):
             print(f"Model {model_name} failed: {e}")
     raise Exception("Critical: All API models exhausted!")
 
+def create_text_thumbnail(text, filename_prefix="thumb"):
+    import urllib.request
+    import os
+    lines = text.strip().split('\n')
+    lines = [line for line in lines if line.strip()][:3]
+    img_width, img_height = 1200, 500
+    background_color = (30, 45, 65) # Dark Navy Blue for economy
+    text_color = (255, 255, 255)
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+        img = Image.new('RGB', (img_width, img_height), color=background_color)
+        draw = ImageDraw.Draw(img)
+        
+        font_path = "NanumGothic-Bold.ttf"
+        if not os.path.exists(font_path):
+            try:
+                urllib.request.urlretrieve("https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Bold.ttf", font_path)
+            except:
+                pass
+                
+        try:
+            font = ImageFont.truetype(font_path, 80)
+        except:
+            font = ImageFont.load_default()
+            
+        draw.rectangle([30, 30, img_width-30, img_height-30], outline=(100, 150, 200), width=3)
+        y_text = (img_height // 2) - (len(lines) * 50)
+        for line in lines:
+            line = line.strip()
+            if not line: continue
+            try:
+                bbox = draw.textbbox((0, 0), line, font=font)
+                width = bbox[2] - bbox[0]
+                height = bbox[3] - bbox[1]
+            except:
+                width = len(line) * 20; height = 80
+            draw.text(((img_width - width) / 2, y_text), line, font=font, fill=text_color)
+            y_text += height + 40
+            
+        os.makedirs('assets/images', exist_ok=True)
+        img_path = f'assets/images/{filename_prefix}.webp'
+        img.save(img_path, 'WEBP', quality=85)
+        return img_path
+    except Exception as e:
+        print(f"Thumbnail error: {e}")
+        return ""
+
 def generate_post(keyword):
     # Step 1: Profiling (English)
     profile_prompt = f"You are a Wall Street financial analyst. Briefly analyze the target audience for the topic '{keyword}' in 3 sentences."
@@ -113,7 +160,11 @@ def generate_post(keyword):
         paragraphs.insert(len(paragraphs)//2, ad_middle)
     final_text = '\n\n'.join(paragraphs) + ad_bottom
 
-    return title, final_text, ""
+    import time
+    thumb_filename = f"thumb_{int(time.time())}"
+    thumb_rel_path = create_text_thumbnail(thumb_hook, thumb_filename)
+
+    return title, final_text, thumb_rel_path
 
 def main():
     import datetime
@@ -130,7 +181,7 @@ def main():
         
     print(f'Golden Keyword: {keyword}')
     
-    title, post_content, _ = generate_post(keyword)
+    title, post_content, thumb_path = generate_post(keyword)
     if post_content:
         date_str = datetime.datetime.now().strftime('%Y-%m-%d')
         safe_title = "".join(c if c.isalnum() else "-" for c in keyword.lower())
@@ -139,7 +190,7 @@ def main():
         
         filename = f'_posts/{date_str}-{safe_title}.md'
         os.makedirs('_posts', exist_ok=True)
-        frontmatter = f"---\nlayout: post\ntitle: \"{title}\"\ndate: {date_str}\n---\n\n"
+        frontmatter = f"---\nlayout: post\ntitle: \"{title}\"\ndate: {date_str}\nimage: {thumb_path}\n---\n\n"
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(frontmatter + post_content)
         print(f'Successfully generated {filename}')
