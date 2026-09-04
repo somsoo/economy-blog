@@ -81,7 +81,7 @@ def create_text_thumbnail(text, filename_prefix="thumb"):
 
 def generate_post(keyword):
     # Step 1: Profiling (English)
-    profile_prompt = f"You are a Wall Street financial analyst. Briefly analyze the target audience for the topic '{keyword}' in 3 sentences."
+    profile_prompt = f"You are a Senior Wall Street Chief Economist and Institutional Asset Strategist at a top-tier financial publication. Analyze the global market implications, macro liquidity shifts, and target institutional audience for the topic '{keyword}' in 3 sharp, authoritative sentences."
     profiling = generate_with_retry(profile_prompt)
     
     # Step 2: Outline
