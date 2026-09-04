@@ -21,7 +21,6 @@ For institutional investors, utility executives, policymakers, and ESG strategis
 ![Finance Vibe]({{ '/' | append: 'assets/images/vibe_1788483462_0.webp' | relative_url }})
 <br>
 
-
 For institutional investors and energy sector analysts, the AI boom is no longer just a software play; it is an industrial infrastructure play. The bottleneck of the 21st century is no longer data or algorithms—it is electrons. 
 
 ### The Staggering Scale of CapEx
@@ -48,7 +47,6 @@ The intersection of tech and power yields several high-conviction investment the
 ![Finance Vibe]({{ '/' | append: 'assets/images/vibe_1788483463_1.webp' | relative_url }})
 <br>
 
-
 While Silicon Valley dreams of artificial general intelligence (AGI), regional grid operators and utility executives are wrestling with the stark reality of localized brownout risks and transmission bottlenecks. 
 
 ### Unprecedented Load Growth
@@ -72,13 +70,10 @@ Forward-thinking utilities are implementing "co-location" agreements, where data
 ![Finance Vibe]({{ '/' | append: 'assets/images/vibe_1788483463_2.webp' | relative_url }})
 <br>
 
-
 <div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="5979106011" data-ad-format="auto" data-full-width-responsive="true"></ins>
 <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
 </div>
-
-
 
 Governments at local, state, and federal levels find themselves trapped between competing mandates: fiercely supporting national technological competitiveness in AI, while simultaneously ensuring regional energy security and consumer rate protection.
 
@@ -102,7 +97,6 @@ To relieve pressure on the public grid, policymakers are introducing financial i
 <br>
 ![Finance Vibe]({{ '/' | append: 'assets/images/vibe_1788483464_3.webp' | relative_url }})
 <br>
-
 
 For ESG-focused investors and corporate sustainability strategists, the AI boom presents an existential threat to corporate decarbonization commitments. The hard physics of the energy crunch threaten to undo years of hard-won corporate climate progress.
 
