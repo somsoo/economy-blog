@@ -162,7 +162,6 @@ def generate_post(keyword):
         paragraphs.insert(len(paragraphs)//2, ad_middle)
     final_text = '\n\n'.join(paragraphs) + ad_bottom
 
-    import time
     thumb_filename = f"thumb_{int(time.time())}"
     thumb_rel_path = create_text_thumbnail(thumb_hook, thumb_filename)
 
