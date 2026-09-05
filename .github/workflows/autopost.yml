@@ -28,7 +28,15 @@ jobs:
       - name: Run Auto Poster
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python auto_poster.py
+        run: |
+          for i in 1 2 3; do
+            echo "Attempt $i to run auto_poster.py..."
+            python auto_poster.py && break || {
+              if [ $i -eq 3 ]; then echo "Auto poster failed after 3 attempts"; exit 1; fi
+              echo "Failed, retrying in 15 seconds..."
+              sleep 15
+            }
+          done
 
       - name: Commit and Push
         run: |
@@ -36,4 +44,11 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add _posts/ assets/
           git commit -m "Auto-generate new post via Gemini API" || echo "No changes to commit"
-          git push
+          for i in 1 2 3; do
+            git pull --rebase origin main || true
+            git push origin main && break || {
+              if [ $i -eq 3 ]; then echo "Git push failed after 3 attempts"; exit 1; fi
+              echo "Push failed, retrying in 5 seconds..."
+              sleep 5
+            }
+          done
