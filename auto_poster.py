@@ -156,12 +156,7 @@ def generate_post(keyword):
     ad_middle = '\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="5979106011" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({% raw %}{}{% endraw %});</script>\n</div>\n'
     ad_bottom = '\n<div class="manual-ad-container" style="margin: 25px 0; text-align: center;">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="2231432699" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({% raw %}{}{% endraw %});</script>\n</div>\n'
     
-    # insert ad middle randomly if possible
-    paragraphs = processed_text.split('\n\n')
-    if len(paragraphs) > 4:
-        paragraphs.insert(len(paragraphs)//2, ad_middle)
-    processed_text = re.sub(r'(?i)^#\s+[^
-]+\n+', '', processed_text)
+    processed_text = re.sub(r'(?i)^#\s+[^\n]+\n+', '', processed_text)
     paragraphs = processed_text.split('\n\n')
     if len(paragraphs) > 4:
         paragraphs.insert(len(paragraphs)//2, ad_middle)
