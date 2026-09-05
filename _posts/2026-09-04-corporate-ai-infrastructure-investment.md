@@ -5,7 +5,6 @@ date: 2026-09-04
 image: assets/images/thumb_1788551345.webp
 ---
 
-# The New Global Utility: Navigating the AI Infrastructure Regime Shift
 
 **Meta Description:** Discover why AI infrastructure has become the new global utility. Senior expert analysis on the capital shift from software to compute, energy demand, and institutional asset allocation.
 
@@ -53,7 +52,7 @@ Compute capacity—specifically H100/B200-grade GPU clusters—has replaced real
 
 <div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="5979106011" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 
@@ -101,5 +100,5 @@ For the modern investor, the message is clear: Stop looking at digital-only metr
 We are not merely witnessing a technological trend; we are witnessing the construction of the architecture that will define the global market for the next half-century. Position accordingly.
 <div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="2231432699" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
