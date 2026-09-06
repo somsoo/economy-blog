@@ -84,9 +84,9 @@ NVIDIA has successfully entrenched itself as the essential intermediary between 
 ***
 
 ### Related Reading
-* [Understanding the Role of TSMC in the NVIDIA Supply Chain](https://example.com/tsmc-nvidia-partnership)
-* [AMD vs. NVIDIA: A Comparative Analysis of AI Silicon](https://example.com/amd-vs-nvidia-analysis)
-* [The Future of Enterprise AI: Beyond the Hype Cycle](https://example.com/future-enterprise-ai)
+* Understanding the Role of TSMC in the NVIDIA Supply Chain
+* AMD vs. NVIDIA: A Comparative Analysis of AI Silicon
+* The Future of Enterprise AI: Beyond the Hype Cycle
 
 ***
 
