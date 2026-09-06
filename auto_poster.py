@@ -101,6 +101,11 @@ def generate_post(keyword):
     final_text = generate_with_retry(rewrite_prompt)
     final_text = re.sub(r'(?i)^(?:#+\s*)?H[23]:\s*', '', final_text, flags=re.MULTILINE)
     final_text = re.sub(r'^---.*?---\s*', '', final_text, flags=re.DOTALL)
+    # Dummy links / Fake URLs cleanup
+    dummy_md_pattern = r'\[([^\]]+)\]\((?:https?:\/\/)?(?:www\.)?(?:example\.(?:com|org)|test\.com|yourlink\.com|sample\.com)[^\)]*\)'
+    final_text = re.sub(dummy_md_pattern, r'\1', final_text)
+    dummy_html_pattern = r'<a\s+[^>]*href=[\'"](?:https?:\/\/)?(?:www\.)?(?:example\.(?:com|org)|test\.com|yourlink\.com|sample\.com)[^\'"]*[\'"][^>]*>(.*?)<\/a>'
+    final_text = re.sub(dummy_html_pattern, r'\1', final_text)
 
     # Step 6: Metadata
     meta_prompt = f"Return a JSON object for this post:\n{{ 'title': 'Catchy SEO title for {keyword}', 'thumb_hook': '2-line short catchy text for thumbnail\\\nabout {keyword}', 'vibe_keywords': '1-2 words for pixabay image search (e.g. stock, finance)' }}"
