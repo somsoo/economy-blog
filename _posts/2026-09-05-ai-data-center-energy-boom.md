@@ -35,7 +35,7 @@ To understand the scale of this paradigm shift, consider the following critical 
 
 We are no longer talking about incremental increases in power consumption. We are looking at a parabolic curve. This exponential demand has violently collided with physical reality. Compute capacity is no longer bounded solely by the supply of advanced semiconductors from foundries like [TSMC](https://www.tsmc.com) or Nvidia’s latest GPU architectures. It is hitting a hard, uncompromising physical wall: the wall socket. 
 
-You can ship a million H100 or B200 GPUs, but if the local grid cannot supply the massive electrical load required to run a next-gen data center campus, those chips are nothing more than expensive silicon doorstops. This realization has triggered a profound philosophical shift in institutional boardrooms. Software is no longer purely ethereal; it is tethered directly to the capacity of local power plants, transformers, and transmission lines. This shift heavily influences our outlook on the broader [Semiconductor supply chains](https://example.com/semiconductor-supply-chains) and how hardware availability relies entirely on downstream power availability.
+You can ship a million H100 or B200 GPUs, but if the local grid cannot supply the massive electrical load required to run a next-gen data center campus, those chips are nothing more than expensive silicon doorstops. This realization has triggered a profound philosophical shift in institutional boardrooms. Software is no longer purely ethereal; it is tethered directly to the capacity of local power plants, transformers, and transmission lines. This shift heavily influences our outlook on the broader Semiconductor supply chains and how hardware availability relies entirely on downstream power availability.
 
 ---
 
@@ -48,7 +48,7 @@ You can ship a million H100 or B200 GPUs, but if the local grid cannot supply th
 
 This physical bottleneck has forced the smart money to pivot aggressively. Tier-1 asset managers, sovereign wealth funds, and private equity giants are executing the largest capital reallocation since the industrial revolution, shifting balance sheets away from pure-play digital assets and toward tangible, hard-asset infrastructure.
 
-Consider the traditional venture and growth equity playbook: pour billions into pre-revenue software startups with high burn rates. Today, that capital is flowing into electrical engineering, heavy machinery, and power generation assets. Infrastructure funds that historically targeted toll roads, airports, and traditional pipelines are now bidding aggressively on electrical grid assets, renewable energy portfolios, and independent power producers (IPPs). Smart allocators are increasingly looking at [Green energy investing](https://example.com/green-energy-investing) as the bedrock of future technological security.
+Consider the traditional venture and growth equity playbook: pour billions into pre-revenue software startups with high burn rates. Today, that capital is flowing into electrical engineering, heavy machinery, and power generation assets. Infrastructure funds that historically targeted toll roads, airports, and traditional pipelines are now bidding aggressively on electrical grid assets, renewable energy portfolios, and independent power producers (IPPs). Smart allocators are increasingly looking at Green energy investing as the bedrock of future technological security.
 
 
 <div class="manual-ad-container" style="margin: 25px 0; text-align: center;">
@@ -57,7 +57,7 @@ Consider the traditional venture and growth equity playbook: pour billions into 
 </div>
 
 
-This is not merely a tactical trade; it is a strategic hedge against macro uncertainty. In a shifting interest rate environment marked by sticky inflation, long-duration infrastructure assets linked to inflation-protected, multi-decade contracts offer a defensive fortress. Hyperscalers—Microsoft, Google, Amazon, and Meta—are no longer just tech companies; they are functioning as quasi-energy utilities, signing direct power purchase agreements (PPAs) that span decades and run into the billions of dollars, fundamentally altering corporate [Cloud computing CapEx](https://example.com/cloud-computing-capex) strategies.
+This is not merely a tactical trade; it is a strategic hedge against macro uncertainty. In a shifting interest rate environment marked by sticky inflation, long-duration infrastructure assets linked to inflation-protected, multi-decade contracts offer a defensive fortress. Hyperscalers—Microsoft, Google, Amazon, and Meta—are no longer just tech companies; they are functioning as quasi-energy utilities, signing direct power purchase agreements (PPAs) that span decades and run into the billions of dollars, fundamentally altering corporate Cloud computing CapEx strategies.
 
 The risk profile has fundamentally shifted. Software obsolescence happens in months; a well-maintained power plant or a secured grid connection has a productive lifespan measured in decades. By moving down the risk curve into hard infrastructure, institutional capital is building a moat that pure-play software companies simply cannot replicate. 
 
