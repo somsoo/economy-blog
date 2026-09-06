@@ -73,7 +73,7 @@ The [energy-infrastructure nexus](https://www.iea.org/reports/electricity-2024) 
 
 This creates a unique "secular tailwind." The surge in AI energy requirements is creating a decade-long inflationary pressure on energy prices. While this is a challenge for general consumers, for institutional investors, it presents a compelling opportunity. We are seeing a shift in the capital markets toward "utility-adjacent" sectors—nuclear, small modular reactors (SMRs), high-voltage transmission, and cooling technology.
 
-Infrastructure is no longer just about roads and bridges; it is about the "Power-to-Compute" pipeline. Investors who focus on the companies building the specialized cooling systems for data centers or the modular energy providers capable of powering AI campuses are identifying the true "picks and shovels" of the AI boom. These are long-duration, high-moat assets that provide the essential life-support system for the AI economy. For a deeper dive into how this impacts broader market stability, you may want to review our analysis on [The Future of Global Energy Markets](https://example.com/future-energy-markets).
+Infrastructure is no longer just about roads and bridges; it is about the "Power-to-Compute" pipeline. Investors who focus on the companies building the specialized cooling systems for data centers or the modular energy providers capable of powering AI campuses are identifying the true "picks and shovels" of the AI boom. These are long-duration, high-moat assets that provide the essential life-support system for the AI economy. For a deeper dive into how this impacts broader market stability, you may want to review our analysis on The Future of Global Energy Markets.
 
 ## Strategic Playbook: Positioning for the AI Secular Expansion
 
