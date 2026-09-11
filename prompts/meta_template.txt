@@ -1,0 +1,11 @@
+﻿Analyze the following financial report regarding "{keyword}" and return ONLY a valid JSON object:
+
+{
+  "title": "A compelling, authoritative Wall Street Journal style SEO title (under 60 chars)",
+  "thumb_hook": "2-line short, impactful hook for thumbnail text",
+  "vibe_keywords": "1-2 financial/tech keywords for image retrieval (e.g. trading, central bank, data center)",
+  "meta_description": "A crisp, informative 150-char summary for search engine snippet"
+}
+
+[ARTICLE DRAFT]
+{draft_text}
