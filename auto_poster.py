@@ -1,4 +1,4 @@
-﻿import os
+import os
 import json
 import random
 import time
@@ -164,21 +164,15 @@ def generate_post(keyword, source_text):
     thumb_filename = f"thumb_{int(time.time())}"
     thumb_rel_path = create_text_thumbnail(thumb_hook, thumb_filename)
 
-    # 하단 유틸리티 계산기 카드 및 출처 표기 블록 (E-E-A-T 강화)
-    utility_card = f"""
-<div style="margin: 35px 0; padding: 22px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">
-    <h3 style="margin-top: 0; color: #1e293b; font-size: 18px; font-weight: bold;">📊 Institutional Analysis & Utility Tools</h3>
-    <p style="color: #475569; font-size: 15px; margin-bottom: 16px;">Track macroeconomic volatility and portfolio sensitivity using our real-time interactive analytical models.</p>
-    <a href="/guide/" style="display: inline-block; padding: 12px 24px; background: #2563eb; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">Explore Macroeconomic Pillar Guide & Tools →</a>
-</div>
-
-<div style="margin: 30px 0; padding: 15px; border-left: 4px solid #94a3b8; background-color: #f1f5f9; font-size: 13px; color: #64748b;">
-    <strong>Verification & Attribution Notice:</strong> This market brief is algorithmically curated using verified public filings, central bank disclosures, and market wires. Data validated via automated factual consistency gates.
+    # 하단 팩트 검증 출처 고지문 (E-E-A-T 강화)
+    attribution_notice = """
+<div style="margin: 35px 0; padding: 16px 20px; border-left: 4px solid #3b82f6; background-color: #f8fafc; font-size: 13px; color: #475569; line-height: 1.6;">
+    <strong>Data Integrity & Attribution:</strong> This analytical report is curated from public central bank announcements, institutional market disclosures, and verified news feeds. Factual figures and metrics are validated via automated factual consistency checks.
 </div>
 """
     ad_bottom = '\n<div class="manual-ad-container" style="margin: 30px 0; text-align: center;">\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2228289204702106" data-ad-slot="2231432699" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>\n</div>\n'
 
-    final_text = processed_text + utility_card + ad_bottom
+    final_text = processed_text + attribution_notice + ad_bottom
     return title, final_text, thumb_rel_path, meta_desc
 
 def main():
