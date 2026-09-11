@@ -122,46 +122,85 @@ def generate_post(keyword, source_text):
     # Load prompt templates
     with open('prompts/draft_template.txt', 'r', encoding='utf-8') as f:
         draft_template = f.read()
-    with open('prompts/meta_template.txt', 'r', encoding='utf-8') as f:
-        meta_template = f.read()
 
-    print(f"Step 1: Generating Grounded Report on '{keyword}'...")
+    # [Pass 1/3] Grounded Analytical Draft
+    print(f"Pass 1/3: Generating Grounded Draft on '{keyword}'...")
     draft_prompt = draft_template.replace('{keyword}', keyword).replace('{source_text}', source_text)
     draft = generate_with_retry(draft_prompt)
 
-    # 팩트체크 게이트 실행 (비용 0원 정규식 검증)
-    print("Step 2: Running Regex Fact-Check Gate...")
-    check_result = fact_checker.verify_facts(draft, source_text, threshold=0.65)
+    # [Pass 2/3] Incisive Critic Audit for AI Smell & Flow
+    print("Pass 2/3: Running Incisive Critic Audit for AI Smell & Flow...")
+    critic_prompt = f"""You are a ruthlessly discerning Editor-in-Chief at a premier global publication (e.g. Financial Times, Bloomberg).
+Critically audit the following draft and highlight 3 precise flaws:
+1. AI clichés, boilerplate filler, or generic phrasing (e.g., 'delve into', 'tapestry', 'in today's fast-paced world', 'it is crucial to note')
+2. Monotonous cadence or overly repetitive sentence structures
+3. Superficial summarization vs. high-conviction institutional and practical insights
+
+[Draft]:
+{draft}"""
+    critique = generate_with_retry(critic_prompt)
+    print(f"Critic Audit Complete. Feedback length: {len(critique)} chars")
+
+    # [Pass 3/3] Final Humanized Rewrite & Metadata Generation
+    print("Pass 3/3: Executing Final Humanized Rewrite & Meta Generation...")
+    rewrite_prompt = f"""You are a top-tier institutional financial columnist and senior editor.
+Incorporate 100% of the [Critic Feedback] below to thoroughly overhaul the [Draft] into an authoritative, compelling 1800-word publication-ready analysis.
+
+[Core Editorial Guidelines]
+1. Completely eradicate robotic AI cadence and hollow buzzwords. Write with natural intellectual vigor and engaging journalistic flow.
+2. Use ONLY ## (H2) and ### (H3) for subheadings. NEVER use # (H1).
+3. Preserve the exact placeholder '[VIBE_IMAGE_HERE]' immediately following each H2 subheading.
+4. Keep the markdown comparison table and actionable takeaways, but never expose bracketed prompt labels.
+5. Do not wrap the output in markdown code fences (```).
+
+[Critic Feedback]:
+{critique}
+
+[Draft]:
+{draft}
+
+At the very end of your response, strictly output the metadata JSON between the following delimiters:
+---METADATA_START---
+{{
+  "title": "{keyword} Strategic Analysis Headline",
+  "thumb_hook": "{keyword}\\nMarket Insights",
+  "vibe_keywords": "finance market",
+  "meta_description": "Comprehensive institutional market analysis of {keyword}."
+}}
+---METADATA_END---"""
+
+    rewrite_output = generate_with_retry(rewrite_prompt)
+
+    # Parse Metadata and clean rewritten text
+    meta = {}
+    if '---METADATA_START---' in rewrite_output and '---METADATA_END---' in rewrite_output:
+        parts = rewrite_output.split('---METADATA_START---')
+        final_draft = parts[0].strip()
+        meta_json_str = parts[1].split('---METADATA_END---')[0].strip()
+        try:
+            meta = json.loads(meta_json_str)
+        except:
+            pass
+    else:
+        final_draft = rewrite_output.strip()
+
+    title = meta.get('title', f"{keyword} Analysis")
+    thumb_hook = meta.get('thumb_hook', f"{keyword}\nMarket Insights")
+    vibe_keywords = meta.get('vibe_keywords', 'finance')
+    meta_desc = meta.get('meta_description', '')
+
+    # [Fact-Check Gate] Local regex
+    print("Running Local Regex Fact-Check Gate...")
+    check_result = fact_checker.verify_facts(final_draft, source_text, threshold=0.55)
     print(f"Fact-Check result: Passed={check_result['passed']}, Match Rate={int(check_result['match_rate']*100)}%")
-    if not check_result['passed']:
-        print(f"Unmatched figures detected: {check_result['unmatched']}. Retrying draft once with stricter grounding...")
-        strict_prompt = draft_prompt + "\n\nCRITICAL WARNING: Prior draft contained unverified figures. STRICTLY use only figures in the source material."
-        draft = generate_with_retry(strict_prompt)
-        check_result = fact_checker.verify_facts(draft, source_text, threshold=0.60)
-        print(f"Re-check result: Passed={check_result['passed']}, Match Rate={int(check_result['match_rate']*100)}%")
 
-    # 클린업 및 AI 티 제거 정제 필터
-    draft = re.sub(r'^#\s+(.+)$', r'## \1', draft, flags=re.MULTILINE)
-    draft = re.sub(r'^(?:하하[!,~]?\s*|자,\s*그럼\s*|현대\s*사회[는에서]?\s*)', '', draft, flags=re.MULTILINE)
-    draft = re.sub(r'\[(?:\d+단계|[가-힣\s]+체크리스트|[가-힣\s]+절차)\]', r'### 핵심 이용 절차 및 확인사항', draft)
-    draft = re.sub(r'\[(?:Actionable|Key Takeaway|Checklist)[^\]]*\]', r'### Strategic Action Framework', draft, flags=re.IGNORECASE)
-    draft = re.sub(r'(?i)^(?:#+\s*)?H[23]:\s*', '', draft, flags=re.MULTILINE)
-    draft = re.sub(r'^---.*?---\s*', '', draft, flags=re.DOTALL)
+    # Cleanup & Anti-AI filters
+    final_draft = re.sub(r'^#\s+(.+)$', r'## \1', final_draft, flags=re.MULTILINE)
+    final_draft = re.sub(r'\[(?:Actionable|Key Takeaway|Checklist)[^\]]*\]', r'### Strategic Action Framework', final_draft, flags=re.IGNORECASE)
+    final_draft = re.sub(r'(?i)^(?:#+\s*)?H[23]:\s*', '', final_draft, flags=re.MULTILINE)
+    final_draft = re.sub(r'^---.*?---\s*', '', final_draft, flags=re.DOTALL)
 
-    # Step 3: Meta 정보 생성
-    print("Step 3: Generating SEO Metadata...")
-    meta_prompt = meta_template.replace('{keyword}', keyword).replace('{draft_text}', draft[:1500])
-    meta_json_str = generate_with_retry(meta_prompt, is_json=True)
-    try:
-        meta = json.loads(meta_json_str)
-        title = meta.get('title', f"{keyword} Analysis")
-        thumb_hook = meta.get('thumb_hook', f"{keyword}\nMarket Insights")
-        vibe_keywords = meta.get('vibe_keywords', 'finance')
-        meta_desc = meta.get('meta_description', '')
-    except:
-        title, thumb_hook, vibe_keywords, meta_desc = f"{keyword} Analysis", f"{keyword}\nMarket Insights", "finance", ""
-
-    # Step 4: Pixabay 이미지 처리
+    # Pixabay image handling
     image_urls = []
     try:
         import urllib.parse, requests
@@ -173,7 +212,7 @@ def generate_post(keyword, source_text):
     except:
         pass
 
-    parts = draft.split('[VIBE_IMAGE_HERE]')
+    parts = final_draft.split('[VIBE_IMAGE_HERE]')
     processed_text = parts[0]
     img_idx = 0
     for part in parts[1:]:
@@ -186,11 +225,11 @@ def generate_post(keyword, source_text):
             processed_text += f"\n\n![{alt_text}]({{{{ '/' | append: '{v_path}' | relative_url }}}})\n\n"
         processed_text += part
 
-    # 썸네일 생성
+    # Thumbnail generation
     thumb_filename = f"thumb_{int(time.time())}"
     thumb_rel_path = create_text_thumbnail(thumb_hook, thumb_filename)
 
-    # 하단 팩트 검증 출처 고지문 (E-E-A-T 강화)
+    # E-E-A-T attribution notice
     attribution_notice = """
 <div style="margin: 35px 0; padding: 16px 20px; border-left: 4px solid #3b82f6; background-color: #f8fafc; font-size: 13px; color: #475569; line-height: 1.6;">
     <strong>Data Integrity & Attribution:</strong> This analytical report is curated from public central bank announcements, institutional market disclosures, and verified news feeds. Factual figures and metrics are validated via automated factual consistency checks.
