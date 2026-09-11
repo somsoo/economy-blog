@@ -40,7 +40,7 @@ def generate_with_retry(prompt, is_json=False):
 def create_text_thumbnail(text, filename_prefix="thumb"):
     import urllib.request
     lines = [line.strip() for line in text.strip().split('\n') if line.strip()][:3]
-    img_width, img_height = 1200, 500
+    img_width, img_height = 1200, 675  # 16:9 표준 비율 (웹 및 모바일 잘림 완전 방지)
     background_color = (30, 45, 65) # Dark Navy Blue
     text_color = (255, 255, 255)
     try:
@@ -53,22 +53,43 @@ def create_text_thumbnail(text, filename_prefix="thumb"):
                 urllib.request.urlretrieve("https://github.com/google/fonts/raw/main/ofl/nanumgothic/NanumGothic-Bold.ttf", font_path)
             except:
                 pass
-        try:
-            font = ImageFont.truetype(font_path, 75)
-        except:
-            font = ImageFont.load_default()
+
+        border_margin = 40
+        draw.rectangle([border_margin, border_margin, img_width - border_margin, img_height - border_margin], outline=(100, 150, 200), width=3)
+        
+        # 텍스트 가로폭에 따라 폰트 크기 자동 조절 (Auto-fit)
+        max_text_width = img_width - (border_margin * 2) - 100
+        current_font_size = 75
+        font = ImageFont.truetype(font_path, current_font_size)
+        
+        while current_font_size > 35:
+            max_line_w = 0
+            for line in lines:
+                try:
+                    bbox = draw.textbbox((0, 0), line, font=font)
+                    w = bbox[2] - bbox[0]
+                except:
+                    w = len(line) * (current_font_size * 0.6)
+                if w > max_line_w:
+                    max_line_w = w
+            if max_line_w <= max_text_width:
+                break
+            current_font_size -= 2
+            font = ImageFont.truetype(font_path, current_font_size)
             
-        draw.rectangle([30, 30, img_width-30, img_height-30], outline=(100, 150, 200), width=3)
-        y_text = (img_height // 2) - (len(lines) * 45)
+        line_height = current_font_size + 25
+        total_text_height = len(lines) * line_height
+        y_text = (img_height // 2) - (total_text_height // 2)
+        
         for line in lines:
             try:
                 bbox = draw.textbbox((0, 0), line, font=font)
-                width = bbox[2] - bbox[0]
-                height = bbox[3] - bbox[1]
+                w = bbox[2] - bbox[0]
             except:
-                width = len(line) * 20; height = 75
-            draw.text(((img_width - width) / 2, y_text), line, font=font, fill=text_color)
-            y_text += height + 35
+                w = len(line) * (current_font_size * 0.6)
+            x_text = (img_width - w) / 2
+            draw.text((x_text, y_text), line, font=font, fill=text_color)
+            y_text += line_height
             
         os.makedirs('assets/images', exist_ok=True)
         img_path = f'assets/images/{filename_prefix}.webp'
