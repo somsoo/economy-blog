@@ -140,7 +140,11 @@ def generate_post(keyword, source_text):
         check_result = fact_checker.verify_facts(draft, source_text, threshold=0.60)
         print(f"Re-check result: Passed={check_result['passed']}, Match Rate={int(check_result['match_rate']*100)}%")
 
-    # 클린업
+    # 클린업 및 AI 티 제거 정제 필터
+    draft = re.sub(r'^#\s+(.+)$', r'## \1', draft, flags=re.MULTILINE)
+    draft = re.sub(r'^(?:하하[!,~]?\s*|자,\s*그럼\s*|현대\s*사회[는에서]?\s*)', '', draft, flags=re.MULTILINE)
+    draft = re.sub(r'\[(?:\d+단계|[가-힣\s]+체크리스트|[가-힣\s]+절차)\]', r'### 핵심 이용 절차 및 확인사항', draft)
+    draft = re.sub(r'\[(?:Actionable|Key Takeaway|Checklist)[^\]]*\]', r'### Strategic Action Framework', draft, flags=re.IGNORECASE)
     draft = re.sub(r'(?i)^(?:#+\s*)?H[23]:\s*', '', draft, flags=re.MULTILINE)
     draft = re.sub(r'^---.*?---\s*', '', draft, flags=re.DOTALL)
 
@@ -178,7 +182,8 @@ def generate_post(keyword, source_text):
             v_path = download_vibe_image(image_urls[img_idx], f"vibe_{int(time.time())}_{img_idx}")
             img_idx += 1
         if v_path:
-            processed_text += f"\n<br>\n![Market Chart]({{{{ '/' | append: '{v_path}' | relative_url }}}})\n<br>\n"
+            alt_text = f"{keyword} Strategic Market Analysis {img_idx}"
+            processed_text += f"\n\n![{alt_text}]({{{{ '/' | append: '{v_path}' | relative_url }}}})\n\n"
         processed_text += part
 
     # 썸네일 생성
@@ -206,7 +211,10 @@ def main():
 
     if post_content:
         date_str = datetime.now().strftime('%Y-%m-%d')
-        safe_title = re.sub(r'[^a-zA-Z0-9\-]', '', keyword.replace(' ', '-')).lower()
+        clean_kw = re.sub(r'[^a-zA-Z0-9가-힣\s\-]', '', keyword).strip()
+        safe_title = re.sub(r'[\s\-]+', '-', clean_kw).strip('-').lower()
+        if not safe_title or safe_title == '-':
+            safe_title = f"post-{int(time.time())}"
         filename = f'_posts/{date_str}-{safe_title}.md'
         os.makedirs('_posts', exist_ok=True)
         

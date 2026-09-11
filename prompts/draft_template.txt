@@ -14,5 +14,12 @@ STRUCTURAL REQUIREMENTS:
 5. Provide high intellectual density: explain the "why", the macroeconomic liquidity implications, and practical effects.
 6. Write entirely in professional, accessible English. No markdown code blocks like ```markdown.
 
+
+CRITICAL EDITORIAL STYLE & TONE RULES (NO AI CLICHÉS):
+1. Never use # (H1) anywhere in the body text. Use ONLY ## (H2) and ### (H3). The main title is already rendered in the page header.
+2. Strictly eliminate all AI clichés and empty filler: DO NOT write "Executive Brief", "In conclusion", "It is important to remember", "Delve into", "Tapestry", "Testament", "In today's fast-paced world". Write with the incisive, authoritative tone of a senior columnist at the Financial Times, Bloomberg, or Wall Street Journal.
+3. Do not echo prompt bracket labels (such as [Actionable 3-step checklist]) verbatim in the text. Integrate them naturally with professional subheadings like '### Strategic Action Framework for Investors'.
+4. Do not wrap the response in markdown code fences like ```markdown.
+
 [SOURCE MATERIAL]
 {source_text}
