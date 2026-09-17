@@ -8,3 +8,18 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-seo-tag
+exclude:
+  - AI_MAINTENANCE_RULES.md
+  - POST_LOG.md
+  - used_keywords.txt
+  - posted_history.txt
+  - campaigns.json
+  - auto_poster.py
+  - fact_checker.py
+  - keyword_miner.py
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - wrangler.jsonc
+  - prompts/
+  - "*.py"
