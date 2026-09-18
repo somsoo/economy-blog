@@ -354,9 +354,17 @@
   <style id="layout-shield">
     html, body {
       max-width: 100% !important;
+      width: 100% !important;
       overflow-x: hidden !important;
     }
-    main, article, .prose {
+    main {
+      max-width: 100% !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      overflow-x: hidden !important;
+    }
+    article, .prose {
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
